@@ -102,3 +102,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+Split_CLI/.idea/workspace.xml
