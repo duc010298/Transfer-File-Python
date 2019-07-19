@@ -9,8 +9,9 @@ init(autoreset=True)
 @click.argument("file")
 @click.option("--file-size", help="File size (kb) of file 001, 002, ...", default="199")
 @click.option("--number-of-part", help="Number of path", default="0")
-def main(file: str, file_size: int, number_of_part: int):
-    data = split_file(file, file_size, number_of_part)
+@click.option("--del-src", help="Delete source file", default="true")
+def main(file, file_size, number_of_part, del_src):
+    data = split_file(file, file_size, number_of_part, del_src)
     print_result(data)
 
 
