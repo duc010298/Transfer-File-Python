@@ -7,7 +7,7 @@ BUF = 50*1024*1024*1024
 
 def split_file(file, file_size, number_of_part, del_src):
     data = {}
-    if file_size != '199' and number_of_part != '0':
+    if file_size != 199 and number_of_part != 0:
         data["status"] = 0
         data["content"] = "Failure - Cannot split file with both file_size and number_of_part"
         return data
@@ -20,17 +20,14 @@ def split_file(file, file_size, number_of_part, del_src):
             data["content"] = "Failure - File not exist"
             return data
 
-    del_src = del_src.lower()
-    if del_src != 'true' and del_src != 'false':
+    if del_src != 0 and del_src != 1:
         data["status"] = 0
         data["content"] = "Failure - Delete source file arg invalid"
         return data
 
     chapters = 1
-    if number_of_part != '0':
-        try:
-            number_of_part = int(number_of_part)
-        except ValueError:
+    if number_of_part != 0:
+        if number_of_part <= 0:
             data["status"] = 0
             data["content"] = "Failure - Number of part invalid"
             return data
@@ -38,9 +35,7 @@ def split_file(file, file_size, number_of_part, del_src):
         file_size = os.path.getsize(file)
         max_size = file_size / number_of_part
     else:
-        try:
-            file_size = int(file_size)
-        except ValueError:
+        if file_size <= 0 or max_size > os.path.getsize(file):
             data["status"] = 0
             data["content"] = "Failure - File size invalid"
             return data
@@ -65,7 +60,7 @@ def split_file(file, file_size, number_of_part, del_src):
                 break
             chapters += 1
 
-    if del_src == 'true':
+    if del_src == 1:
         os.remove(file)
 
     data["status"] = 1
